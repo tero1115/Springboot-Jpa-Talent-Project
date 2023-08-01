@@ -34,6 +34,9 @@ public class PostEntity {
     @Column(name = "content", nullable = false)
     private String content;
 
+    @Column(name = "thumbnail", nullable = false)
+    private String thumbnail;
+
     @Column(name = "create_date" , nullable = false)
     private LocalDateTime createDate;
 

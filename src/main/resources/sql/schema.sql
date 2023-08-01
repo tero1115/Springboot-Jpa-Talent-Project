@@ -31,7 +31,8 @@ CREATE TABLE `post` (
                         `id` int(11) NOT NULL AUTO_INCREMENT,
                         `title` varchar(255) NOT NULL,
                         `category` varchar(255) NOT NULL,
-                        `content` varchar(255) NOT NULL,
+                        `content` longtext NOT NULL,
+                        `thumbnail` longtext NOT NULL,
                         `user_id` int(11) NOT NULL,
                         `create_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                         `delete_date` TIMESTAMP DEFAULT NULL,
@@ -44,7 +45,7 @@ CREATE TABLE `post` (
 CREATE TABLE `apply` (
                          `id` int(11) NOT NULL AUTO_INCREMENT,
                          `title` varchar(255) NOT NULL,
-                         `content` varchar(255) NOT NULL,
+                         `content` longtext NOT NULL,
                          `post_id` int(11) NOT NULL,
                          `user_id` int(11) NOT NULL,
                          `create_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -59,7 +60,7 @@ CREATE TABLE `apply` (
 
 CREATE TABLE `comment` (
                            `id` int(11) NOT NULL AUTO_INCREMENT,
-                           `content` varchar(255) NOT NULL,
+                           `content` longtext NOT NULL,
                            `user_id` int(11) NOT NULL,
                            `apply_id` int(11) NOT NULL,
                            `create_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,

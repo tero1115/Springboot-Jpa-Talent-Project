@@ -30,12 +30,16 @@ public class ResMainApiDTO {
     public static class Post {
         private String title;
         private String category;
+        private String username;
+        private String thumbnail;
         private LocalDateTime createDate;
 
         public static Post fromEntity(PostEntity postEntity) {
             return Post.builder()
                     .title(postEntity.getTitle())
                     .category(postEntity.getCategory())
+                    .username(postEntity.getUserEntity().getUsername())
+                    .thumbnail(postEntity.getThumbnail())
                     .createDate(postEntity.getCreateDate())
                     .build();
         }

@@ -7,9 +7,9 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 
-    Optional<UserEntity> findById(String id);
+    Optional<UserEntity> findByUsername(String username);
 
-    Optional<UserEntity> findByIdAndDeleteDateIsNull(String id);
+    Optional<UserEntity> findByUsernameAndDeleteDateIsNull(String username);
 
-    Optional<UserEntity> findByIdxAndDeleteDateIsNull(Long idx);
+    Optional<UserEntity> findByIdAndDeleteDateIsNull(Long id);
 }

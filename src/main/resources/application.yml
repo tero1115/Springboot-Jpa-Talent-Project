@@ -17,7 +17,7 @@ spring:
     open-in-view: false # 트랜잭션 범위 밖에서 영속성 컨텍스트를 유지할지 여부
     database-platform: org.hibernate.dialect.MariaDBDialect
     hibernate:
-      ddl-auto: none # create-drop, update, validate, none
+      ddl-auto: create # create-drop, update, validate, none
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl

@@ -17,13 +17,13 @@ public class ReqJoinDTO {
 
     @Valid
     @NotNull(message = "유저 정보를 입력해주세요.")
-    private User user;
+    private JoinUserDTO joinUserDTO;
 
     @NoArgsConstructor
     @AllArgsConstructor
     @Builder
     @Getter
-    public static class User {
+    public static class JoinUserDTO {
 
         @NotBlank(message = "아이디를 입력해주세요.")
         @Size(min = 2, message = "아이디는 2자 이상 입력해주세요.")
@@ -33,7 +33,7 @@ public class ReqJoinDTO {
         private String password;
 
         @NotBlank(message = "전화번호를 입력해주세요.")
-        @Pattern(regexp = "^[0-9]{11}$", message = "하이픈(-)없이 숫자11자리만 입력해주세요")
+        @Pattern(regexp = "^[0-9]{11}$", message = "하이픈(-)없이 숫자만 입력해주세요")
         private String tel;
     }
 

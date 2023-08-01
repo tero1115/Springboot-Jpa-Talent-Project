@@ -27,7 +27,7 @@ public class AuthServiceApiV1 {
 
     public ResponseEntity<?> login(ReqLoginDTO dto, HttpSession session) {
         // 리파지토리에서 아이디로 삭제되지 않은 유저 찾기
-        Optional<UserEntity> userEntityOptional = userRepository.findByUsernameAndDeleteDateIsNull(dto.getUser().getUsername());
+        Optional<UserEntity> userEntityOptional = userRepository.findByUsernameAndDeleteDateIsNull(dto.getLoginUserDTO().getUsername());
 
         // 없으면 (존재하지 않는 사용자입니다.) 메시지 리턴
         if (!userEntityOptional.isPresent()) {
@@ -37,7 +37,7 @@ public class AuthServiceApiV1 {
         UserEntity userEntity = userEntityOptional.get();
 
         // 비밀번호가 일치하지 않으면 (비밀번호가 일치하지 않습니다.) 메시지 리턴
-        if (!userEntity.getPassword().equals(dto.getUser().getPassword())) {
+        if (!userEntity.getPassword().equals(dto.getLoginUserDTO().getPassword())) {
             throw new BadRequestException("비밀번호가 일치하지 않습니다.");
         }
 
@@ -57,7 +57,7 @@ public class AuthServiceApiV1 {
     public ResponseEntity<?> join(ReqJoinDTO dto) {
 
         // 리파지토리에서 아이디로 유저 찾기
-        Optional<UserEntity> userEntityOptional = userRepository.findByUsername(dto.getUser().getUsername());
+        Optional<UserEntity> userEntityOptional = userRepository.findByUsername(dto.getJoinUserDTO().getUsername());
 
         // 있으면 (이미 존재하는 아이디입니다.) 메시지 리턴
         if (userEntityOptional.isPresent()) {
@@ -67,9 +67,9 @@ public class AuthServiceApiV1 {
 
         // 없으면 회원가입 처리
         UserEntity userEntity = UserEntity.builder()
-                .username(dto.getUser().getUsername())
-                .password(dto.getUser().getPassword())
-                .tel(dto.getUser().getTel())
+                .username(dto.getJoinUserDTO().getUsername())
+                .password(dto.getJoinUserDTO().getPassword())
+                .tel(dto.getJoinUserDTO().getTel())
                 .createDate(LocalDateTime.now())
                 .build();
 

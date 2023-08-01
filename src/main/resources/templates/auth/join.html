@@ -55,7 +55,7 @@
                     <input type="text" id="tel" class="form-control" oninput="formatPhoneNumber()" maxlength="13"/>
                 </div>
 
-                <button class="btn btn-primary" type="button" style="width: 100%" onclick="join()">
+                <button class="btn btn-primary" type="button" style="width: 100%" onclick="requestJoin()">
                     회원가입
                 </button>
     
@@ -70,6 +70,97 @@
 </section>
 
 <script>
+
+    // 회원가입 요청
+    // 회원가입 버튼을 누르면 실행되는 함수
+    const requestJoin = () => {
+        // 서버와 통신하기 전에 입력값 검증
+        if (!validateFields()) {
+            return;
+        }
+
+        const telValue = document.getElementById("tel").value.replace(/\D/g, '');
+        // 회원가입 요청
+        const dto = {
+            user : {
+                username : document.getElementById("id").value,
+                password : document.getElementById("password").value,
+                tel : telValue
+            },
+        };
+
+        fetch("/api/v1/auth/join",{
+            method : "POST",
+            headers : {
+                "Content-Type" : "application/json;charset=utf-8"
+            },
+            body : JSON.stringify(dto)
+        })
+            .then((response) => response.json())
+            .then((result) => {
+                alert(result.message);
+                if (result.code === 0) {
+                    // 회원가입 성공
+                    location.replace("/auth/login")
+                }
+            })
+    };
+
+    // 유효성 검사 ( 아이디, 비밀번호 등 내용이 비어있는지 확인 )
+    const validateFields = () => {
+        // id 속성을 이용해서 해당하는 요소를 가져온다.
+        const idElement = document.getElementById("id");
+        const pwElement = document.getElementById("password");
+        const pw2Element = document.getElementById("password2");
+        const telElement = document.getElementById("tel");
+
+        // 값들이 비어있는지 확인
+        if (idElement.value === "") {
+            alert("아이디를 입력해주세요.");
+            idElement.focus();
+            return false;
+        }
+
+        if (pwElement.value === "") {
+            alert("비밀번호를 입력해주세요.");
+            pwElement.focus();
+            return false;
+        }
+
+        if (pw2Element.value === "") {
+            alert("비밀번호 확인을 입력해주세요.");
+            pw2Element.focus();
+            return false;
+        }
+
+        if (pwElement.value !== pw2Element.value) {
+            alert("비밀번호가 일치하지 않습니다.");
+            pw2Element.focus();
+            return false;
+        }
+
+        if (pwElement.value === "") {
+            alert("비밀번호를 입력해주세요.");
+            pwElement.focus();
+            return false;
+        }
+
+        if (telElement.value === "") {
+            alert("전화번호를 입력해주세요.");
+            telElement.focus();
+            return false;
+        }
+
+        const telValue = telElement.value.replace(/\D/g, ''); // Remove hyphens
+        if (telValue.length !== 11) {
+            alert("전화번호 11자리를 모두 입력해주세요");
+            telElement.focus();
+            return false;
+        }
+
+
+        return true;
+    };
 
 function formatPhoneNumber() {
         const input = document.getElementById('tel');

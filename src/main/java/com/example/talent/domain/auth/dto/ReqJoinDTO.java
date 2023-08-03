@@ -17,13 +17,13 @@ public class ReqJoinDTO {
 
     @Valid
     @NotNull(message = "유저 정보를 입력해주세요.")
-    private JoinUserDTO joinUserDTO;
+    private User user;
 
     @NoArgsConstructor
     @AllArgsConstructor
     @Builder
     @Getter
-    public static class JoinUserDTO {
+    public static class User {
 
         @NotBlank(message = "아이디를 입력해주세요.")
         @Size(min = 2, message = "아이디는 2자 이상 입력해주세요.")

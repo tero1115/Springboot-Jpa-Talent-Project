@@ -15,13 +15,13 @@ public class ReqLoginDTO {
 
     @Valid
     @NotNull(message = "유저 정보를 입력해주세요.")
-    private ReqLoginDTO.LoginUserDTO loginUserDTO;
+    private User user;
 
     @NoArgsConstructor
     @AllArgsConstructor
     @Builder
     @Getter
-    public static class LoginUserDTO {
+    public static class User {
 
         @NotBlank(message = "아이디를 입력해주세요.")
         private String username;

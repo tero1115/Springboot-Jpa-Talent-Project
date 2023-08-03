@@ -27,7 +27,7 @@ public class AuthServiceApiV1 {
 
     public ResponseEntity<?> login(ReqLoginDTO dto, HttpSession session) {
         // 리파지토리에서 아이디로 삭제되지 않은 유저 찾기
-        Optional<UserEntity> userEntityOptional = userRepository.findByUsernameAndDeleteDateIsNull(dto.getLoginUserDTO().getUsername());
+        Optional<UserEntity> userEntityOptional = userRepository.findByUsernameAndDeleteDateIsNull(dto.getUser().getUsername());
 
         // 없으면 (존재하지 않는 사용자입니다.) 메시지 리턴
         if (!userEntityOptional.isPresent()) {
@@ -37,12 +37,12 @@ public class AuthServiceApiV1 {
         UserEntity userEntity = userEntityOptional.get();
 
         // 비밀번호가 일치하지 않으면 (비밀번호가 일치하지 않습니다.) 메시지 리턴
-        if (!userEntity.getPassword().equals(dto.getLoginUserDTO().getPassword())) {
+        if (!userEntity.getPassword().equals(dto.getUser().getPassword())) {
             throw new BadRequestException("비밀번호가 일치하지 않습니다.");
         }
 
         // 세션에 로그인 유저 정보 저장
-        session.setAttribute("dto", LoginUserDTO.of(userEntity));
+        session.setAttribute("userDTO", LoginUserDTO.of(userEntity));
 
         // 응답 데이터로 리턴하기 (로그인에 성공하였습니다.)
         return new ResponseEntity<>(
@@ -57,7 +57,7 @@ public class AuthServiceApiV1 {
     public ResponseEntity<?> join(ReqJoinDTO dto) {
 
         // 리파지토리에서 아이디로 유저 찾기
-        Optional<UserEntity> userEntityOptional = userRepository.findByUsername(dto.getJoinUserDTO().getUsername());
+        Optional<UserEntity> userEntityOptional = userRepository.findByUsername(dto.getUser().getUsername());
 
         // 있으면 (이미 존재하는 아이디입니다.) 메시지 리턴
         if (userEntityOptional.isPresent()) {
@@ -67,9 +67,11 @@ public class AuthServiceApiV1 {
 
         // 없으면 회원가입 처리
         UserEntity userEntity = UserEntity.builder()
-                .username(dto.getJoinUserDTO().getUsername())
-                .password(dto.getJoinUserDTO().getPassword())
-                .tel(dto.getJoinUserDTO().getTel())
+                .username(dto.getUser().getUsername())
+                .password(dto.getUser().getPassword())
+                .tel(dto.getUser().getTel())
+                // TODO 기본프로필 넣기
+                .profile("")
                 .createDate(LocalDateTime.now())
                 .build();
 

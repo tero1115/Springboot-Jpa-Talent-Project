@@ -35,6 +35,9 @@ public class UserEntity {
     @Column(name = "tel", nullable = false)
     private String tel;
 
+    @Column(name = "profile")
+    private String profile;
+
     @Column(name = "create_date" , nullable = false)
     private LocalDateTime createDate;
 

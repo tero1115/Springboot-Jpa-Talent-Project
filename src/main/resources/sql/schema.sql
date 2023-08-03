@@ -10,6 +10,7 @@ CREATE TABLE `user` (
                         `username` varchar(255) NOT NULL,
                         `password` varchar(255) NOT NULL,
                         `tel` varchar(255) NOT NULL,
+                        `profile` longtext DEFAULT NULL,
                         `create_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                         `delete_date` TIMESTAMP DEFAULT NULL,
                         `update_date` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,

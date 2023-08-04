@@ -34,6 +34,7 @@ public class LoginUserDTO {
         private String username;
         private String password;
         private String tel;
+        private String profile;
         private List<String> roleList;
 
         public static User fromEntity(UserEntity userEntity) {
@@ -42,6 +43,7 @@ public class LoginUserDTO {
                     .username(userEntity.getUsername())
                     .password(userEntity.getPassword())
                     .tel(userEntity.getTel())
+                    .profile(userEntity.getProfile())
                     .roleList(
                             userEntity.getUserRoleEntityList()
                                     .stream()

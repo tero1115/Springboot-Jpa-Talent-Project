@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<header>
+<header th:fragment="headerFragment">
     <!--header 부분 code -->
 
     <style>
@@ -65,7 +65,7 @@
 
             <div class="my-profile">
 
-                <a href="/">
+                <a href="/mypage">
 <!--                        // TODO 프로필 설정필요-->
                     <img src="/images/profile.jpeg" style="width: 35px;"class="rounded-circle" alt="Cinque Terre">
                 </a>

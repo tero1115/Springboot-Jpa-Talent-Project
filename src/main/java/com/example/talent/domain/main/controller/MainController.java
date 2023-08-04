@@ -16,4 +16,14 @@ public class MainController {
 
         return modelAndView;
     }
+
+    @GetMapping("/mypage")
+    public ModelAndView myPage() {
+
+        ModelAndView modelAndView = new ModelAndView();
+
+        modelAndView.setViewName("main/myPage");
+
+        return modelAndView;
+    }
 }

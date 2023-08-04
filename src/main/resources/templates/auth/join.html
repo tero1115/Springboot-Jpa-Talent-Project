@@ -1,18 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
 
-    <!-- config.html -->
-    <th:block th:replace="/fragments/config :: head"></th:block>
 
-    <title>회원가입</title>
-</head>
-
-<body>
-    
-<section style="background-color: #bec9c3; min-height: 100vh"> 
+<section layout:fragment="content" style="background-color: #e3f2fd; min-height: 100vh">
     <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
           <div class="col-12 col-md-8 col-lg-6 col-xl-5">
@@ -167,5 +159,4 @@ function formatPhoneNumber() {
 
 </script>
 
-</body>
 </html>

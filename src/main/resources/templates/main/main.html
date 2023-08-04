@@ -1,26 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<head>
-    <meta charset="UTF-8">
-    <!-- config.html -->
-    <th:block th:replace="/fragments/config :: head"></th:block>
-    <title>Talent</title>
-</head>
-<body>
-
-<!-- header.html -->
-<header th:replace="/fragments/header :: header"></header>
-
-<!-- The main content of your page -->
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
 
 
-
-<div class="container my-3">
+<div layout:fragment="content" class="container my-3">
 
         <!--글 작성 버튼-->
         <div style="display: flex; margin-bottom: 10px">
-            <a href="/" class="btn btn-outline-primary" style="margin-left: auto;">글 등록하기</a>
+            <a href="/post/save" class="btn btn-outline-primary" style="margin-left: auto;">글 등록하기</a>
         </div>
 
     <div class="my-board-box row">
@@ -89,9 +77,5 @@
 <!--    </ul>-->
 </div>
 
-<!-- footer.html -->
-<footer th:replace="/fragments/footer :: footer"></footer>
 
-
-</body>
 </html>

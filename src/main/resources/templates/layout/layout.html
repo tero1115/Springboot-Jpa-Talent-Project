@@ -13,10 +13,33 @@
     <th:block th:replace="/fragments/config :: head"></th:block>
 
     <!-- content script -->
-    <th:block layout:fragment="css"></th:block>
+    <th:block layout:fragment="css">
+        <script>
+
+        <!--        썸머노트 사용/설정-->
+        $(document).ready(function () {
+            $('.summernote').summernote({
+                tabsize: 2,
+                height: 400
+            });
+        });
+
+
+        <!--        apply\saveForm에서 사용-->
+            function apply(){
+
+            }
+
+
+
+        </script>
+    </th:block>
 
     <!-- content script -->
-    <th:block layout:fragment="script"></th:block>
+    <th:block layout:fragment="script">
+
+
+    </th:block>
 
 </head>
 

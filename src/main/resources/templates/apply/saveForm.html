@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<div layout:fragment="content">
+
+    <div class="container pb-3" style="max-width: 800px">
+        <h2>신청글 작성</h2>
+        <div class="form-group mt-3">
+            <input type="text" class="form-control" placeholder="Enter title" name="title" id="title">
+        </div>
+
+        <div class="form-group">
+            <textarea class="form-control summernote" rows="5" id="content" name="content"></textarea>
+        </div>
+
+        <div style="display: flex">
+            <button onclick="save()" type="button" class="btn btn-primary" style="margin-left: auto">신청하기</button>
+        </div>
+
+    </div>
+
+</div>
+
+</html>

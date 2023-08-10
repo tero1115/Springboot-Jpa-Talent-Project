@@ -14,13 +14,13 @@ public class ReqSavePostDTO {
 
     @Valid
     @NotNull(message = "글 정보를 입력해주세요.")
-    private SavePostDTO savePostDTO;
+    private Post post;
 
     @NoArgsConstructor
     @AllArgsConstructor
     @Getter
     @Builder
-    private static class  SavePostDTO {
+    public static class Post {
 
         @NotNull(message = "제목을 입력해주세요.")
         private String title;

@@ -26,14 +26,14 @@
         </div>
 
         <div style="display: flex">
-            <button onclick="save()" type="button" class="btn btn-primary" style="margin-left: auto">글쓰기완료</button>
+            <button onclick="savePost()" type="button" class="btn btn-primary" style="margin-left: auto">글쓰기완료</button>
         </div>
 
     </div>
 
     <script>
 
-        const save = () => {
+        const savePost = () => {
             // 서버와 통신하기 전에 입력값 검증
             if (!validateFields()) {
                 return;

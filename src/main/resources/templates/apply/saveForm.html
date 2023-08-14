@@ -5,8 +5,33 @@
 
 <div layout:fragment="content">
 
+    <div class="container pb-3" style="max-width: 800px;">
+
+        <div class="form-group mt-3" style="border: 1px solid black; border-radius: 3px">
+            <h2 th:text="${dto.title}">  </h2>
+        </div>
+
+        <div class="input-group my-2" style="margin-left: auto">
+            <span th:text="${dto.category}">  </span>
+        </div>
+
+        <div class="form-group">
+            <div style="min-height: 300px; border: 1px solid black; border-radius: 3px">
+                <span th:utext="${dto.content}">
+
+                </span>
+            </div>
+        </div>
+
+
+    </div>
+
     <div class="container pb-3" style="max-width: 800px">
         <h2>신청글 작성</h2>
+
+        <!-- Hidden input field for postId -->
+        <input type="hidden" name="postId" id="postId" th:value="${postId}" />
+
         <div class="form-group mt-3">
             <input type="text" class="form-control" placeholder="Enter title" name="title" id="title">
         </div>
@@ -16,10 +41,65 @@
         </div>
 
         <div style="display: flex">
-            <button onclick="save()" type="button" class="btn btn-primary" style="margin-left: auto">신청하기</button>
+            <button onclick="saveApply()" type="button" class="btn btn-primary" style="margin-left: auto">신청하기</button>
         </div>
 
     </div>
+
+    <script>
+
+        const saveApply = () => {
+            // 서버와 통신하기 전에 입력값 검증
+            if (!validateFields()) {
+                return;
+            }
+
+            // 로그인 요청
+            const dto = {
+                apply : {
+                    title : document.getElementById("title").value,
+                    content : document.getElementById("content").value,
+                    postId :document.getElementById("postId").value,
+                },
+            };
+
+            fetch("/api/v1/apply", {
+                method : "POST",
+                headers : {
+                    "Content-Type" : "application/json;charset=utf-8",
+                },
+                body : JSON.stringify(dto),
+            })
+                .then((response) => response.json())
+                .then((result) => {
+                    alert(result.message);
+                    if (result.code == 0) {
+                        location.replace("/");
+                    }
+                })
+        };
+
+        const validateFields = () => {
+            // id속성으로 요소를 가져옴
+            const titleElement = document.getElementById("title");
+            const contentElement = document.getElementById("content");
+
+            if (titleElement.value === "") {
+                alert("제목을 입력해주세요.");
+                titleElement.focus();
+                return false;
+            }
+
+            if (contentElement.value === "") {
+                alert("내용을 입력해주세요.");
+                contentElement.focus();
+                return false;
+            }
+
+            return true;
+        };
+
+    </script>
 
 </div>
 

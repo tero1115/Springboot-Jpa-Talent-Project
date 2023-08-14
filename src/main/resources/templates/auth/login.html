@@ -17,7 +17,7 @@
 
                 <div class="input-group mb-3">
                     <span id="usernameAddOn" class="input-group-text">&nbsp;아이디 &nbsp;</span>
-                    <input type="text" id="username" class="form-control"/>
+                    <input type="text" id="username" class="form-control" autofocus/>
                 </div>
     
                 <div class="input-group mb-3">
@@ -38,81 +38,73 @@
         </div>
       </div>
 
-</section>
+    <script>
 
-<script>
+        // 비밀번호 입력창에서 엔터키를 치면 로그인 요청하는 함수
+        document.querySelector("#password").addEventListener("keyup", (event) => {
+            if (event.keyCode === 13) {
+                requestLogin();
+            }
+        });
 
-    // 비밀번호 입력창에서 엔터키를 치면 로그인 요청하는 함수
-    document.querySelector("#password").addEventListener("keyup", (event) => {
-        if (event.keyCode === 13) {
-            requestLogin();
-        }
-    });
+        // 로그인 요청하는 함수
+        // 로그인 버튼을 누르면 실행됨
+        const requestLogin = () => {
+            // 서버와 통신하기 전에 입력값 검증
+            if (!validateFields()) {
+                return;
+            }
 
-    // 로그인 요청하는 함수
-    // 로그인 버튼을 누르면 실행됨
-    const requestLogin = () => {
-        // 서버와 통신하기 전에 입력값 검증
-        if (!validateFields()) {
-            return;
-        }
+            // 로그인 요청
+            const dto = {
+                user : {
+                    username : document.getElementById("username").value,
+                    password : document.getElementById("password").value
+                },
+            };
 
-        // 로그인 요청
-        const dto = {
-            user : {
-                username : document.getElementById("username").value,
-                password : document.getElementById("password").value
-            },
+            fetch("/api/v1/auth/login", {
+                method : "POST",
+                headers : {
+                    "Content-Type" : "application/json;charset=utf-8",
+                },
+                body : JSON.stringify(dto),
+            })
+                .then((response) => response.json())
+                .then((result) => {
+                    alert(result.message);
+                    if (result.code == 0) {
+                        location.replace("/");
+                    }
+                })
         };
 
-        fetch("/api/v1/auth/login", {
-            method : "POST",
-            headers : {
-                "Content-Type" : "application/json;charset=utf-8",
-            },
-            body : JSON.stringify(dto),
-        })
-            .then((response) => response.json())
-            .then((result) => {
-                alert(result.message);
-                if (result.code == 0) {
-                    location.replace("/");
-                }
-            })
-    };
+        // 아이디와 비밀번호 입력창이 비어있는지 검사하는 함수
+        const validateFields = () => {
+            // id속성으로 요소를 가져옴
+            const usernameElement = document.getElementById("username");
+            const pwElement = document.getElementById("password");
 
-    // 아이디와 비밀번호 입력창이 비어있는지 검사하는 함수
-    const validateFields = () => {
-        // id속성으로 요소를 가져옴
-        const usernameElement = document.getElementById("username");
-        const pwElement = document.getElementById("password");
+            if (usernameElement.value === "") {
+                alert("아이디를 입력해주세요.");
+                usernameElement.focus();
+                return false;
+            }
 
-        if (usernameElement.value === "") {
-            alert("아이디를 입력해주세요.");
-            usernameElement.focus();
-            return false;
-        }
+            if (pwElement.value === "") {
+                alert("비밀번호를 입력해주세요.");
+                pwElement.focus();
+                return false;
+            }
 
-        if (pwElement.value === "") {
-            alert("비밀번호를 입력해주세요.");
-            pwElement.focus();
-            return false;
-        }
+            return true;
+        };
 
-        return true;
-    };
+    </script>
 
-    // 페이지가 로드되면 실행되는 함수
-    const setLoginPage = () => {
-        // 창이 켜지면 아이디 입력창에 포커스가 가도록 설정
-        const usernameElement = document.getElementById("username");
-        usernameElement.focus();
-    };
+</section>
 
-</script>
-<script defer>
-    setLoginPage();
-</script>
+
 
 
 </html>

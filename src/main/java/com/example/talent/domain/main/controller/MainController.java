@@ -1,17 +1,26 @@
 package com.example.talent.domain.main.controller;
 
+import com.example.talent.domain.main.dto.ResMainApiDTO;
+import com.example.talent.domain.main.service.MainService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
+@RequiredArgsConstructor
 public class MainController {
+    
+    private final MainService mainService;
 
     @GetMapping("/")
     public ModelAndView mainPage() {
 
         ModelAndView modelAndView = new ModelAndView();
+
+        ResMainApiDTO dto = mainService.getPostTable();
+        modelAndView.addObject("dto",dto);
 
         modelAndView.setViewName("main/main");
 

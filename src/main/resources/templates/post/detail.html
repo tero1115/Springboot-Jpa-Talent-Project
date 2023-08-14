@@ -8,20 +8,17 @@
     <div class="container pb-3" style="max-width: 800px">
 
         <div class="form-group mt-3">
-            <h2> 임시제목 </h2>
+            <h2 th:text="${dto.title}">  </h2>
         </div>
 
         <div class="input-group my-2" style="margin-left: auto">
-            <span> 카테고리 </span>
+            <span th:text="${dto.category}">  </span>
         </div>
 
         <div class="form-group">
             <div>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Aliquid assumenda commodi culpa eligendi excepturi expedita ipsa
-                    itaque labore laudantium mollitia quae quam quas, qui quis saepe
-                    sunt ullam voluptatum? Officiis.
+                <p th:text="${dto.content}">
+
                 </p>
             </div>
         </div>

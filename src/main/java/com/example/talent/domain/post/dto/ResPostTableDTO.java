@@ -34,14 +34,14 @@ public class ResPostTableDTO {
         private Integer id;
         private String title;
         private String category;
-        private String thumbnail;
+        private String content;
 
         public static Post fromEntity(PostEntity postEntity) {
             return Post.builder()
                     .id(postEntity.getId())
                     .title(postEntity.getTitle())
                     .category(postEntity.getCategory())
-                    .thumbnail(postEntity.getThumbnail())
+                    .content(postEntity.getContent())
                     .build();
 
         }

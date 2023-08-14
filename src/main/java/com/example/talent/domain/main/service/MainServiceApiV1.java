@@ -14,11 +14,11 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
+@Transactional(readOnly = true)
 public class MainServiceApiV1 {
 
     private final PostRepository postRepository;
 
-    @Transactional
     public ResponseEntity<?> getPostTable() {
         List<PostEntity> postEntityList = postRepository.findAll();
 

@@ -14,10 +14,10 @@
         <div class="input-group my-2" style="width: 170px; margin-left: auto">
             <select class="form-select" aria-label="Default select example" name="category" id="category">
                 <option selected>*카테고리 선택</option>
-                <option value="">프로그램개발</option>
-                <option value="">디자인</option>
-                <option value="">번역/외국어</option>
-                <option value="">음악/영상</option>
+                <option value="프로그램개발">프로그램개발</option>
+                <option value="디자인">디자인</option>
+                <option value="번역/외국어">번역/외국어</option>
+                <option value="음악/영상">음악/영상</option>
             </select>
         </div>
 
@@ -30,6 +30,68 @@
         </div>
 
     </div>
+
+    <script>
+
+        const save = () => {
+            // 서버와 통신하기 전에 입력값 검증
+            if (!validateFields()) {
+                return;
+            }
+
+            // 로그인 요청
+            const dto = {
+                post : {
+                    title : document.getElementById("title").value,
+                    category : document.getElementById("category").value,
+                    content : document.getElementById("content").value,
+                },
+            };
+
+            fetch("/api/v1/post", {
+                method : "POST",
+                headers : {
+                    "Content-Type" : "application/json;charset=utf-8",
+                },
+                body : JSON.stringify(dto),
+            })
+                .then((response) => response.json())
+                .then((result) => {
+                    alert(result.message);
+                    if (result.code == 0) {
+                        location.replace("/");
+                    }
+                })
+        };
+
+        const validateFields = () => {
+            // id속성으로 요소를 가져옴
+            const titleElement = document.getElementById("title");
+            const contentElement = document.getElementById("content");
+            const categoryElement = document.getElementById("category");
+
+            if (titleElement.value === "") {
+                alert("제목을 입력해주세요.");
+                titleElement.focus();
+                return false;
+            }
+
+            if (categoryElement.value === "*카테고리 선택") {
+                alert("카테고리를 선택해주세요.");
+                categoryElement.focus();
+                return false;
+            }
+
+            if (contentElement.value === "") {
+                alert("내용을 입력해주세요.");
+                contentElement.focus();
+                return false;
+            }
+
+            return true;
+        };
+
+    </script>
 
 </div>
 

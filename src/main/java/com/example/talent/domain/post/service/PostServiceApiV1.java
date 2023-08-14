@@ -56,12 +56,12 @@ public class PostServiceApiV1 {
     public ResponseEntity<?> save(ReqSavePostDTO dto, LoginUserDTO loginUserDTO) {
 
         // 유저 정보 확인
-        Optional<UserEntity> userEntitoyOptional = userRepository.findById(loginUserDTO.getUser().getId());
-        if (!userEntitoyOptional.isPresent()) {
+        Optional<UserEntity> userEntityOptional = userRepository.findById(loginUserDTO.getUser().getId());
+        if (!userEntityOptional.isPresent()) {
             throw new BadRequestException("유저 정보가 없습니다.");
         }
 
-        UserEntity userEntity = userEntitoyOptional.get();
+        UserEntity userEntity = userEntityOptional.get();
 
 
         String thumbnail = HtmlParser.getThumbnail(dto.getPost().getContent());

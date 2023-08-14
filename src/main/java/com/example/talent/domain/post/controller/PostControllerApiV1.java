@@ -1,7 +1,6 @@
 package com.example.talent.domain.post.controller;
 
-import com.example.talent.common.dto.LoginUserDTO;
-import com.example.talent.common.exception.InvalidSessionException;
+import com.example.talent.common.util.GetLoginUser;
 import com.example.talent.domain.post.dto.ReqSavePostDTO;
 import com.example.talent.domain.post.dto.ReqUpdatePostDTO;
 import com.example.talent.domain.post.service.PostServiceApiV1;
@@ -25,25 +24,20 @@ public class PostControllerApiV1 {
 
     @GetMapping("/my")
     public ResponseEntity<?> getMyPostTableData(HttpSession session) {
-        return postServiceApiV1.getMyPostTableData(getLoginUserDTO(session));
+        return postServiceApiV1.getMyPostTableData(GetLoginUser.getLoginUserDTO(session));
     }
 
     @PostMapping
     public ResponseEntity<?> save(@Valid @RequestBody ReqSavePostDTO reqSavePostDTO, HttpSession session) {
 
-        return postServiceApiV1.save(reqSavePostDTO, getLoginUserDTO(session));
+        return postServiceApiV1.save(reqSavePostDTO, GetLoginUser.getLoginUserDTO(session));
     }
 
     @PutMapping
     public ResponseEntity<?> update(@Valid @RequestBody ReqUpdatePostDTO reqUpdatePostDTO, HttpSession session) {
 
-        return postServiceApiV1.update(reqUpdatePostDTO, getLoginUserDTO(session));
+        return postServiceApiV1.update(reqUpdatePostDTO, GetLoginUser.getLoginUserDTO(session));
     }
 
-    private static LoginUserDTO getLoginUserDTO(HttpSession session) {
-        if (session.getAttribute("loginUserDTO") == null) {
-            throw new InvalidSessionException();
-        }
-        return (LoginUserDTO) session.getAttribute("loginUserDTO");
-    }
+
 }

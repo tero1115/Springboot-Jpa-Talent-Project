@@ -37,6 +37,16 @@ public class MainController {
         return modelAndView;
     }
 
+    @GetMapping("/mypage/passwordCheck")
+    public ModelAndView passwordCheck() {
+
+        ModelAndView modelAndView = new ModelAndView();
+
+        modelAndView.setViewName("/mypage/passwordCheck");
+
+        return modelAndView;
+    }
+
     @GetMapping("/mypage/editUserInfo")
     public ModelAndView editUserInfoPage() {
 

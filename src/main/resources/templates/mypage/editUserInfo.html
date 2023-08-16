@@ -16,8 +16,8 @@
                         </h3>
 
                         <div class="input-group mb-3">
-                            <span class="input-group-text">&nbsp; 아이디&nbsp;</span>
-                            <input type="text" id="username" class="form-control" readonly/>
+                            <span class="input-group-text">&nbsp;아이디&nbsp;</span>
+                            <input type="text" id="username" class="form-control" th:value="${session.loginUserDTO.user.username}" style="background-color: white" readonly/>
                         </div>
 
                         <div class="input-group mb-3">
@@ -26,11 +26,16 @@
                         </div>
 
                         <div class="input-group mb-3">
+                            <span class="input-group-text">비번확인</span>
+                            <input type="password" id="password2" class="form-control"/>
+                        </div>
+
+                        <div class="input-group mb-3">
                             <label for="tel" class="input-group-text">전화번호</label>
                             <input type="text" id="tel" class="form-control" oninput="formatPhoneNumber()" maxlength="13"/>
                         </div>
 
-                        <button class="btn btn-outline-dark" type="button" style="width: 100%" onclick="">
+                        <button class="btn btn-outline-dark" type="button" style="width: 100%" onclick="editUserInfo()">
                             수정
                         </button>
 
@@ -39,6 +44,80 @@
             </div>
         </div>
     </div>
+
+    <script>
+
+        const editUserInfo = () => {
+            // 서버와 통신하기 전에 입력값 검증
+            if (!validateFields()) {
+                return;
+            }
+
+            const dto = {
+                post : {
+                    username : document.getElementById("username").value,
+                    password : document.getElementById("password").value,
+                    tel : document.getElementById("tel").value,
+                },
+            };
+
+            fetch("/api/v1/auth/edit", {
+                method : "PUT",
+                headers : {
+                    "Content-Type" : "application/json;charset=utf-8",
+                },
+                body : JSON.stringify(dto),
+            })
+                .then((response) => response.json())
+                .then((result) => {
+                    alert(result.message);
+                    if (result.code == 0) {
+                        location.replace("/mypage");
+                    }
+                })
+        };
+
+        const validateFields = () => {
+            // id속성으로 요소를 가져옴
+            const usernameElement = document.getElementById("username");
+            const passwordElement = document.getElementById("password");
+            const password2Element = document.getElementById("password2")
+            const telElement = document.getElementById("tel");
+
+            if (usernameElement.value === "") {
+                alert("유저 정보가 없습니다.");
+                titleElement.focus();
+                return false;
+            }
+
+            if (passwordElement.value === "") {
+                alert("비밀번호를 입력해주세요.");
+                passwordElement.focus();
+                return false;
+            }
+
+            if (password2Element.value === "") {
+                alert("비밀번호 확인을 입력해주세요.");
+                password2Element.focus();
+                return false;
+            }
+
+            if (passwordElement.value == password2Element.value) {
+                alert("비밀번호가 일치하지 않습니다");
+                password2Element.focus();
+                return false;
+            }
+
+            if (telElement.value === "") {
+                alert("전화번호를 입력해주세요.");
+                telElement.focus();
+                return false;
+            }
+
+            return true;
+        };
+
+    </script>
 
 </div>
 

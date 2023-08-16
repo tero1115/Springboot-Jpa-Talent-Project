@@ -62,4 +62,10 @@ public class UserEntity {
     @OneToMany(mappedBy = "userEntity")
     private List<ReviewEntity> reviewEntityList;
 
+    public void editUserInfo(String password, String tel) {
+        this.password = password;
+        this.tel = tel;
+        this.updateDate = LocalDateTime.now();
+    }
+
 }

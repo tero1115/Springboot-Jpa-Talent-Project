@@ -3,10 +3,17 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/layout}">
 
+<style>
+
+    .my-post {
+        width: 100% !important;
+    }
+</style>
+
 <div layout:fragment="content">
 
     <div class="container py-5 h-100">
-        <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="row d-flex justify-content-center align-items-center">
             <div class="col-12 col-md-8 col-lg-6 col-xl-5">
                 <div class="card " style="border-radius: 1rem; border: black 1px solid; box-shadow: 1px 1px 1px">
                     <div class="card-body p-5 text-center">
@@ -15,10 +22,13 @@
                             내 글 확인
                         </h3>
 
-                        <a href="/mypage/myPost/1" type="button" class="btn btn-outline-dark" style="width: 430px;margin-bottom: 30px">첫번째 글</a><br>
-                        <a href="#" type="button" class="btn btn-outline-dark" style="width: 430px;margin-bottom: 30px">첫번째 글</a><br>
-                        <a href="#" type="button" class="btn btn-outline-dark" style="width: 430px;margin-bottom: 30px">첫번째 글</a><br>
-                        <a href="#" type="button" class="btn btn-outline-dark" style="width: 430px">첫번째 글</a><br>
+                        <div id="post-container">
+
+                        </div>
+<!--                        <a href="/mypage/myPost/1" type="button" class="my-post btn btn-outline-dark" style="width: 100%;margin-bottom: 30px">첫번째 글</a><br>-->
+<!--                        <a href="#" type="button" class="my-post btn btn-outline-dark" style="width: 100%;margin-bottom: 30px">첫번째 글</a><br>-->
+<!--                        <a href="#" type="button" class="my-post btn btn-outline-dark" style="width: 100%;margin-bottom: 30px">첫번째 글</a><br>-->
+<!--                        <a href="#" type="button" class="my-post btn btn-outline-dark" style="width: 100%;">첫번째 글</a><br>-->
 
                     </div>
                 </div>
@@ -26,6 +36,44 @@
         </div>
     </div>
 
+
+    <script>
+        const setPostPage = () => {
+            fetch("/api/v1/post/my", {
+                method : "GET",
+                headers : {
+                    "Content-Type" : "application/json;charset=utf-8",
+                }
+            })
+                .then((response) => response.json())
+                .then((result) => {
+                    if (result.code === 0) {
+                        const postList = result.data.postList;
+                        const postContainer = document.getElementById("post-container");
+
+                        postList.forEach((post) => {
+                            const postLink = document.createElement("a");
+                            postLink.href = "/mypage/myPost/" + post.id;
+                            postLink.className = "my-post btn btn-outline-dark";
+                            postLink.style.width = "100%";
+                            postLink.style.marginBottom = "30px";
+                            postLink.textContent = post.title;
+
+                            postContainer.appendChild(postLink);
+                        });
+                    } else {
+                        alert(result.message);
+                        if (result.message === '로그인이 필요합니다.') {
+                            location.replace("/auth/login");
+                        }
+                    }
+                })
+        }
+    </script>
+
+    <script defer>
+        setPostPage();
+    </script>
 </div>
 
 </html>
